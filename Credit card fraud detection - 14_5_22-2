@@ -1,0 +1,2036 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "c46d358e",
+   "metadata": {},
+   "source": [
+    "Load the dataset using pandas module"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "id": "6f95d518",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "id": "4a19acbd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dataframe=pd.read_csv('creditcard.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "id": "b76fae81",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Time</th>\n",
+       "      <th>V1</th>\n",
+       "      <th>V2</th>\n",
+       "      <th>V3</th>\n",
+       "      <th>V4</th>\n",
+       "      <th>V5</th>\n",
+       "      <th>V6</th>\n",
+       "      <th>V7</th>\n",
+       "      <th>V8</th>\n",
+       "      <th>V9</th>\n",
+       "      <th>...</th>\n",
+       "      <th>V21</th>\n",
+       "      <th>V22</th>\n",
+       "      <th>V23</th>\n",
+       "      <th>V24</th>\n",
+       "      <th>V25</th>\n",
+       "      <th>V26</th>\n",
+       "      <th>V27</th>\n",
+       "      <th>V28</th>\n",
+       "      <th>Amount</th>\n",
+       "      <th>Class</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>-1.359807</td>\n",
+       "      <td>-0.072781</td>\n",
+       "      <td>2.536347</td>\n",
+       "      <td>1.378155</td>\n",
+       "      <td>-0.338321</td>\n",
+       "      <td>0.462388</td>\n",
+       "      <td>0.239599</td>\n",
+       "      <td>0.098698</td>\n",
+       "      <td>0.363787</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.018307</td>\n",
+       "      <td>0.277838</td>\n",
+       "      <td>-0.110474</td>\n",
+       "      <td>0.066928</td>\n",
+       "      <td>0.128539</td>\n",
+       "      <td>-0.189115</td>\n",
+       "      <td>0.133558</td>\n",
+       "      <td>-0.021053</td>\n",
+       "      <td>149.62</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>1.191857</td>\n",
+       "      <td>0.266151</td>\n",
+       "      <td>0.166480</td>\n",
+       "      <td>0.448154</td>\n",
+       "      <td>0.060018</td>\n",
+       "      <td>-0.082361</td>\n",
+       "      <td>-0.078803</td>\n",
+       "      <td>0.085102</td>\n",
+       "      <td>-0.255425</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.225775</td>\n",
+       "      <td>-0.638672</td>\n",
+       "      <td>0.101288</td>\n",
+       "      <td>-0.339846</td>\n",
+       "      <td>0.167170</td>\n",
+       "      <td>0.125895</td>\n",
+       "      <td>-0.008983</td>\n",
+       "      <td>0.014724</td>\n",
+       "      <td>2.69</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-1.358354</td>\n",
+       "      <td>-1.340163</td>\n",
+       "      <td>1.773209</td>\n",
+       "      <td>0.379780</td>\n",
+       "      <td>-0.503198</td>\n",
+       "      <td>1.800499</td>\n",
+       "      <td>0.791461</td>\n",
+       "      <td>0.247676</td>\n",
+       "      <td>-1.514654</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.247998</td>\n",
+       "      <td>0.771679</td>\n",
+       "      <td>0.909412</td>\n",
+       "      <td>-0.689281</td>\n",
+       "      <td>-0.327642</td>\n",
+       "      <td>-0.139097</td>\n",
+       "      <td>-0.055353</td>\n",
+       "      <td>-0.059752</td>\n",
+       "      <td>378.66</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-0.966272</td>\n",
+       "      <td>-0.185226</td>\n",
+       "      <td>1.792993</td>\n",
+       "      <td>-0.863291</td>\n",
+       "      <td>-0.010309</td>\n",
+       "      <td>1.247203</td>\n",
+       "      <td>0.237609</td>\n",
+       "      <td>0.377436</td>\n",
+       "      <td>-1.387024</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.108300</td>\n",
+       "      <td>0.005274</td>\n",
+       "      <td>-0.190321</td>\n",
+       "      <td>-1.175575</td>\n",
+       "      <td>0.647376</td>\n",
+       "      <td>-0.221929</td>\n",
+       "      <td>0.062723</td>\n",
+       "      <td>0.061458</td>\n",
+       "      <td>123.50</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2</td>\n",
+       "      <td>-1.158233</td>\n",
+       "      <td>0.877737</td>\n",
+       "      <td>1.548718</td>\n",
+       "      <td>0.403034</td>\n",
+       "      <td>-0.407193</td>\n",
+       "      <td>0.095921</td>\n",
+       "      <td>0.592941</td>\n",
+       "      <td>-0.270533</td>\n",
+       "      <td>0.817739</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.009431</td>\n",
+       "      <td>0.798278</td>\n",
+       "      <td>-0.137458</td>\n",
+       "      <td>0.141267</td>\n",
+       "      <td>-0.206010</td>\n",
+       "      <td>0.502292</td>\n",
+       "      <td>0.219422</td>\n",
+       "      <td>0.215153</td>\n",
+       "      <td>69.99</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 31 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Time        V1        V2        V3        V4        V5        V6        V7  \\\n",
+       "0     0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599   \n",
+       "1     0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803   \n",
+       "2     1 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461   \n",
+       "3     1 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609   \n",
+       "4     2 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941   \n",
+       "\n",
+       "         V8        V9  ...       V21       V22       V23       V24       V25  \\\n",
+       "0  0.098698  0.363787  ... -0.018307  0.277838 -0.110474  0.066928  0.128539   \n",
+       "1  0.085102 -0.255425  ... -0.225775 -0.638672  0.101288 -0.339846  0.167170   \n",
+       "2  0.247676 -1.514654  ...  0.247998  0.771679  0.909412 -0.689281 -0.327642   \n",
+       "3  0.377436 -1.387024  ... -0.108300  0.005274 -0.190321 -1.175575  0.647376   \n",
+       "4 -0.270533  0.817739  ... -0.009431  0.798278 -0.137458  0.141267 -0.206010   \n",
+       "\n",
+       "        V26       V27       V28  Amount  Class  \n",
+       "0 -0.189115  0.133558 -0.021053  149.62      0  \n",
+       "1  0.125895 -0.008983  0.014724    2.69      0  \n",
+       "2 -0.139097 -0.055353 -0.059752  378.66      0  \n",
+       "3 -0.221929  0.062723  0.061458  123.50      0  \n",
+       "4  0.502292  0.219422  0.215153   69.99      0  \n",
+       "\n",
+       "[5 rows x 31 columns]"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e5d7ec13",
+   "metadata": {},
+   "source": [
+    "Perform missing value analysis on the dataset."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "id": "97d6ea01",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Time      0\n",
+       "V1        0\n",
+       "V2        0\n",
+       "V3        0\n",
+       "V4        0\n",
+       "V5        0\n",
+       "V6        0\n",
+       "V7        0\n",
+       "V8        0\n",
+       "V9        0\n",
+       "V10       0\n",
+       "V11       0\n",
+       "V12       0\n",
+       "V13       0\n",
+       "V14       0\n",
+       "V15       0\n",
+       "V16       0\n",
+       "V17       0\n",
+       "V18       0\n",
+       "V19       0\n",
+       "V20       0\n",
+       "V21       0\n",
+       "V22       0\n",
+       "V23       0\n",
+       "V24       0\n",
+       "V25       0\n",
+       "V26       0\n",
+       "V27       0\n",
+       "V28       0\n",
+       "Amount    0\n",
+       "Class     0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 56,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "id": "7735bb3a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 20000 entries, 0 to 19999\n",
+      "Data columns (total 31 columns):\n",
+      " #   Column  Non-Null Count  Dtype  \n",
+      "---  ------  --------------  -----  \n",
+      " 0   Time    20000 non-null  int64  \n",
+      " 1   V1      20000 non-null  float64\n",
+      " 2   V2      20000 non-null  float64\n",
+      " 3   V3      20000 non-null  float64\n",
+      " 4   V4      20000 non-null  float64\n",
+      " 5   V5      20000 non-null  float64\n",
+      " 6   V6      20000 non-null  float64\n",
+      " 7   V7      20000 non-null  float64\n",
+      " 8   V8      20000 non-null  float64\n",
+      " 9   V9      20000 non-null  float64\n",
+      " 10  V10     20000 non-null  float64\n",
+      " 11  V11     20000 non-null  float64\n",
+      " 12  V12     20000 non-null  float64\n",
+      " 13  V13     20000 non-null  float64\n",
+      " 14  V14     20000 non-null  float64\n",
+      " 15  V15     20000 non-null  float64\n",
+      " 16  V16     20000 non-null  float64\n",
+      " 17  V17     20000 non-null  float64\n",
+      " 18  V18     20000 non-null  float64\n",
+      " 19  V19     20000 non-null  float64\n",
+      " 20  V20     20000 non-null  float64\n",
+      " 21  V21     20000 non-null  float64\n",
+      " 22  V22     20000 non-null  float64\n",
+      " 23  V23     20000 non-null  float64\n",
+      " 24  V24     20000 non-null  float64\n",
+      " 25  V25     20000 non-null  float64\n",
+      " 26  V26     20000 non-null  float64\n",
+      " 27  V27     20000 non-null  float64\n",
+      " 28  V28     20000 non-null  float64\n",
+      " 29  Amount  20000 non-null  float64\n",
+      " 30  Class   20000 non-null  int64  \n",
+      "dtypes: float64(29), int64(2)\n",
+      "memory usage: 4.7 MB\n"
+     ]
+    }
+   ],
+   "source": [
+    "dataframe.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "id": "7fabcc41",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False"
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.isnull().values.any()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6e0c8827",
+   "metadata": {},
+   "source": [
+    "From the dataset, calculate the number of genuine transactions, number of\n",
+    "fraud transactions and the percentage of fraud transactions."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "id": "143092d7",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Time</th>\n",
+       "      <th>V1</th>\n",
+       "      <th>V2</th>\n",
+       "      <th>V3</th>\n",
+       "      <th>V4</th>\n",
+       "      <th>V5</th>\n",
+       "      <th>V6</th>\n",
+       "      <th>V7</th>\n",
+       "      <th>V8</th>\n",
+       "      <th>V9</th>\n",
+       "      <th>...</th>\n",
+       "      <th>V21</th>\n",
+       "      <th>V22</th>\n",
+       "      <th>V23</th>\n",
+       "      <th>V24</th>\n",
+       "      <th>V25</th>\n",
+       "      <th>V26</th>\n",
+       "      <th>V27</th>\n",
+       "      <th>V28</th>\n",
+       "      <th>Amount</th>\n",
+       "      <th>Class</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>-1.359807</td>\n",
+       "      <td>-0.072781</td>\n",
+       "      <td>2.536347</td>\n",
+       "      <td>1.378155</td>\n",
+       "      <td>-0.338321</td>\n",
+       "      <td>0.462388</td>\n",
+       "      <td>0.239599</td>\n",
+       "      <td>0.098698</td>\n",
+       "      <td>0.363787</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.018307</td>\n",
+       "      <td>0.277838</td>\n",
+       "      <td>-0.110474</td>\n",
+       "      <td>0.066928</td>\n",
+       "      <td>0.128539</td>\n",
+       "      <td>-0.189115</td>\n",
+       "      <td>0.133558</td>\n",
+       "      <td>-0.021053</td>\n",
+       "      <td>149.62</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>1.191857</td>\n",
+       "      <td>0.266151</td>\n",
+       "      <td>0.166480</td>\n",
+       "      <td>0.448154</td>\n",
+       "      <td>0.060018</td>\n",
+       "      <td>-0.082361</td>\n",
+       "      <td>-0.078803</td>\n",
+       "      <td>0.085102</td>\n",
+       "      <td>-0.255425</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.225775</td>\n",
+       "      <td>-0.638672</td>\n",
+       "      <td>0.101288</td>\n",
+       "      <td>-0.339846</td>\n",
+       "      <td>0.167170</td>\n",
+       "      <td>0.125895</td>\n",
+       "      <td>-0.008983</td>\n",
+       "      <td>0.014724</td>\n",
+       "      <td>2.69</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-1.358354</td>\n",
+       "      <td>-1.340163</td>\n",
+       "      <td>1.773209</td>\n",
+       "      <td>0.379780</td>\n",
+       "      <td>-0.503198</td>\n",
+       "      <td>1.800499</td>\n",
+       "      <td>0.791461</td>\n",
+       "      <td>0.247676</td>\n",
+       "      <td>-1.514654</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.247998</td>\n",
+       "      <td>0.771679</td>\n",
+       "      <td>0.909412</td>\n",
+       "      <td>-0.689281</td>\n",
+       "      <td>-0.327642</td>\n",
+       "      <td>-0.139097</td>\n",
+       "      <td>-0.055353</td>\n",
+       "      <td>-0.059752</td>\n",
+       "      <td>378.66</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-0.966272</td>\n",
+       "      <td>-0.185226</td>\n",
+       "      <td>1.792993</td>\n",
+       "      <td>-0.863291</td>\n",
+       "      <td>-0.010309</td>\n",
+       "      <td>1.247203</td>\n",
+       "      <td>0.237609</td>\n",
+       "      <td>0.377436</td>\n",
+       "      <td>-1.387024</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.108300</td>\n",
+       "      <td>0.005274</td>\n",
+       "      <td>-0.190321</td>\n",
+       "      <td>-1.175575</td>\n",
+       "      <td>0.647376</td>\n",
+       "      <td>-0.221929</td>\n",
+       "      <td>0.062723</td>\n",
+       "      <td>0.061458</td>\n",
+       "      <td>123.50</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2</td>\n",
+       "      <td>-1.158233</td>\n",
+       "      <td>0.877737</td>\n",
+       "      <td>1.548718</td>\n",
+       "      <td>0.403034</td>\n",
+       "      <td>-0.407193</td>\n",
+       "      <td>0.095921</td>\n",
+       "      <td>0.592941</td>\n",
+       "      <td>-0.270533</td>\n",
+       "      <td>0.817739</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.009431</td>\n",
+       "      <td>0.798278</td>\n",
+       "      <td>-0.137458</td>\n",
+       "      <td>0.141267</td>\n",
+       "      <td>-0.206010</td>\n",
+       "      <td>0.502292</td>\n",
+       "      <td>0.219422</td>\n",
+       "      <td>0.215153</td>\n",
+       "      <td>69.99</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 31 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Time        V1        V2        V3        V4        V5        V6        V7  \\\n",
+       "0     0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599   \n",
+       "1     0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803   \n",
+       "2     1 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461   \n",
+       "3     1 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609   \n",
+       "4     2 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941   \n",
+       "\n",
+       "         V8        V9  ...       V21       V22       V23       V24       V25  \\\n",
+       "0  0.098698  0.363787  ... -0.018307  0.277838 -0.110474  0.066928  0.128539   \n",
+       "1  0.085102 -0.255425  ... -0.225775 -0.638672  0.101288 -0.339846  0.167170   \n",
+       "2  0.247676 -1.514654  ...  0.247998  0.771679  0.909412 -0.689281 -0.327642   \n",
+       "3  0.377436 -1.387024  ... -0.108300  0.005274 -0.190321 -1.175575  0.647376   \n",
+       "4 -0.270533  0.817739  ... -0.009431  0.798278 -0.137458  0.141267 -0.206010   \n",
+       "\n",
+       "        V26       V27       V28  Amount  Class  \n",
+       "0 -0.189115  0.133558 -0.021053  149.62      0  \n",
+       "1  0.125895 -0.008983  0.014724    2.69      0  \n",
+       "2 -0.139097 -0.055353 -0.059752  378.66      0  \n",
+       "3 -0.221929  0.062723  0.061458  123.50      0  \n",
+       "4  0.502292  0.219422  0.215153   69.99      0  \n",
+       "\n",
+       "[5 rows x 31 columns]"
+      ]
+     },
+     "execution_count": 59,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.head()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "603cc6f3",
+   "metadata": {},
+   "source": [
+    "class=0---> non fraud\n",
+    "1-----> fraud"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "id": "13550a65",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(20000, 31)"
+      ]
+     },
+     "execution_count": 60,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "id": "b12af1fb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "non_fraud=dataframe.Class == 0"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "id": "63f2383e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0        True\n",
+       "1        True\n",
+       "2        True\n",
+       "3        True\n",
+       "4        True\n",
+       "         ... \n",
+       "19995    True\n",
+       "19996    True\n",
+       "19997    True\n",
+       "19998    True\n",
+       "19999    True\n",
+       "Name: Class, Length: 20000, dtype: bool"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "non_fraud"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "id": "5a9bb70c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "non_fraud=dataframe[dataframe.Class == 0]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "c04e7083",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Time</th>\n",
+       "      <th>V1</th>\n",
+       "      <th>V2</th>\n",
+       "      <th>V3</th>\n",
+       "      <th>V4</th>\n",
+       "      <th>V5</th>\n",
+       "      <th>V6</th>\n",
+       "      <th>V7</th>\n",
+       "      <th>V8</th>\n",
+       "      <th>V9</th>\n",
+       "      <th>...</th>\n",
+       "      <th>V21</th>\n",
+       "      <th>V22</th>\n",
+       "      <th>V23</th>\n",
+       "      <th>V24</th>\n",
+       "      <th>V25</th>\n",
+       "      <th>V26</th>\n",
+       "      <th>V27</th>\n",
+       "      <th>V28</th>\n",
+       "      <th>Amount</th>\n",
+       "      <th>Class</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>-1.359807</td>\n",
+       "      <td>-0.072781</td>\n",
+       "      <td>2.536347</td>\n",
+       "      <td>1.378155</td>\n",
+       "      <td>-0.338321</td>\n",
+       "      <td>0.462388</td>\n",
+       "      <td>0.239599</td>\n",
+       "      <td>0.098698</td>\n",
+       "      <td>0.363787</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.018307</td>\n",
+       "      <td>0.277838</td>\n",
+       "      <td>-0.110474</td>\n",
+       "      <td>0.066928</td>\n",
+       "      <td>0.128539</td>\n",
+       "      <td>-0.189115</td>\n",
+       "      <td>0.133558</td>\n",
+       "      <td>-0.021053</td>\n",
+       "      <td>149.62</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>1.191857</td>\n",
+       "      <td>0.266151</td>\n",
+       "      <td>0.166480</td>\n",
+       "      <td>0.448154</td>\n",
+       "      <td>0.060018</td>\n",
+       "      <td>-0.082361</td>\n",
+       "      <td>-0.078803</td>\n",
+       "      <td>0.085102</td>\n",
+       "      <td>-0.255425</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.225775</td>\n",
+       "      <td>-0.638672</td>\n",
+       "      <td>0.101288</td>\n",
+       "      <td>-0.339846</td>\n",
+       "      <td>0.167170</td>\n",
+       "      <td>0.125895</td>\n",
+       "      <td>-0.008983</td>\n",
+       "      <td>0.014724</td>\n",
+       "      <td>2.69</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-1.358354</td>\n",
+       "      <td>-1.340163</td>\n",
+       "      <td>1.773209</td>\n",
+       "      <td>0.379780</td>\n",
+       "      <td>-0.503198</td>\n",
+       "      <td>1.800499</td>\n",
+       "      <td>0.791461</td>\n",
+       "      <td>0.247676</td>\n",
+       "      <td>-1.514654</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.247998</td>\n",
+       "      <td>0.771679</td>\n",
+       "      <td>0.909412</td>\n",
+       "      <td>-0.689281</td>\n",
+       "      <td>-0.327642</td>\n",
+       "      <td>-0.139097</td>\n",
+       "      <td>-0.055353</td>\n",
+       "      <td>-0.059752</td>\n",
+       "      <td>378.66</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-0.966272</td>\n",
+       "      <td>-0.185226</td>\n",
+       "      <td>1.792993</td>\n",
+       "      <td>-0.863291</td>\n",
+       "      <td>-0.010309</td>\n",
+       "      <td>1.247203</td>\n",
+       "      <td>0.237609</td>\n",
+       "      <td>0.377436</td>\n",
+       "      <td>-1.387024</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.108300</td>\n",
+       "      <td>0.005274</td>\n",
+       "      <td>-0.190321</td>\n",
+       "      <td>-1.175575</td>\n",
+       "      <td>0.647376</td>\n",
+       "      <td>-0.221929</td>\n",
+       "      <td>0.062723</td>\n",
+       "      <td>0.061458</td>\n",
+       "      <td>123.50</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2</td>\n",
+       "      <td>-1.158233</td>\n",
+       "      <td>0.877737</td>\n",
+       "      <td>1.548718</td>\n",
+       "      <td>0.403034</td>\n",
+       "      <td>-0.407193</td>\n",
+       "      <td>0.095921</td>\n",
+       "      <td>0.592941</td>\n",
+       "      <td>-0.270533</td>\n",
+       "      <td>0.817739</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.009431</td>\n",
+       "      <td>0.798278</td>\n",
+       "      <td>-0.137458</td>\n",
+       "      <td>0.141267</td>\n",
+       "      <td>-0.206010</td>\n",
+       "      <td>0.502292</td>\n",
+       "      <td>0.219422</td>\n",
+       "      <td>0.215153</td>\n",
+       "      <td>69.99</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19995</th>\n",
+       "      <td>47051</td>\n",
+       "      <td>1.254059</td>\n",
+       "      <td>-0.786311</td>\n",
+       "      <td>0.286283</td>\n",
+       "      <td>-0.666334</td>\n",
+       "      <td>-0.951138</td>\n",
+       "      <td>-0.389992</td>\n",
+       "      <td>-0.560189</td>\n",
+       "      <td>-0.024899</td>\n",
+       "      <td>-0.790512</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.040335</td>\n",
+       "      <td>-0.060404</td>\n",
+       "      <td>-0.100546</td>\n",
+       "      <td>0.024825</td>\n",
+       "      <td>0.457905</td>\n",
+       "      <td>-0.304989</td>\n",
+       "      <td>-0.008119</td>\n",
+       "      <td>0.012787</td>\n",
+       "      <td>75.44</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19996</th>\n",
+       "      <td>47052</td>\n",
+       "      <td>-1.883323</td>\n",
+       "      <td>0.104475</td>\n",
+       "      <td>1.931791</td>\n",
+       "      <td>-3.691559</td>\n",
+       "      <td>-0.196086</td>\n",
+       "      <td>1.630184</td>\n",
+       "      <td>-0.391184</td>\n",
+       "      <td>1.133396</td>\n",
+       "      <td>2.757721</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.134996</td>\n",
+       "      <td>0.395790</td>\n",
+       "      <td>-0.229124</td>\n",
+       "      <td>-1.004798</td>\n",
+       "      <td>0.596717</td>\n",
+       "      <td>-0.950903</td>\n",
+       "      <td>0.115782</td>\n",
+       "      <td>-0.134574</td>\n",
+       "      <td>7.74</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19997</th>\n",
+       "      <td>47052</td>\n",
+       "      <td>1.184662</td>\n",
+       "      <td>-0.216035</td>\n",
+       "      <td>0.651774</td>\n",
+       "      <td>-0.168070</td>\n",
+       "      <td>-0.769154</td>\n",
+       "      <td>-0.379905</td>\n",
+       "      <td>-0.482859</td>\n",
+       "      <td>0.188342</td>\n",
+       "      <td>0.333287</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.058520</td>\n",
+       "      <td>-0.224482</td>\n",
+       "      <td>0.157778</td>\n",
+       "      <td>0.247821</td>\n",
+       "      <td>-0.060009</td>\n",
+       "      <td>0.908928</td>\n",
+       "      <td>-0.066832</td>\n",
+       "      <td>-0.005374</td>\n",
+       "      <td>0.77</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19998</th>\n",
+       "      <td>47053</td>\n",
+       "      <td>0.829086</td>\n",
+       "      <td>-0.420209</td>\n",
+       "      <td>-0.323887</td>\n",
+       "      <td>1.118331</td>\n",
+       "      <td>-0.078426</td>\n",
+       "      <td>-0.392259</td>\n",
+       "      <td>0.545886</td>\n",
+       "      <td>-0.259599</td>\n",
+       "      <td>-0.032113</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.124450</td>\n",
+       "      <td>-0.134035</td>\n",
+       "      <td>-0.422629</td>\n",
+       "      <td>-0.422666</td>\n",
+       "      <td>0.719097</td>\n",
+       "      <td>-0.303521</td>\n",
+       "      <td>-0.031901</td>\n",
+       "      <td>0.055239</td>\n",
+       "      <td>250.00</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19999</th>\n",
+       "      <td>47054</td>\n",
+       "      <td>-0.437949</td>\n",
+       "      <td>0.851474</td>\n",
+       "      <td>1.291254</td>\n",
+       "      <td>1.115927</td>\n",
+       "      <td>0.238548</td>\n",
+       "      <td>0.530677</td>\n",
+       "      <td>0.383649</td>\n",
+       "      <td>0.379522</td>\n",
+       "      <td>-0.255904</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.024795</td>\n",
+       "      <td>0.171924</td>\n",
+       "      <td>-0.179547</td>\n",
+       "      <td>-0.333910</td>\n",
+       "      <td>-0.137862</td>\n",
+       "      <td>-0.214643</td>\n",
+       "      <td>0.412898</td>\n",
+       "      <td>0.187111</td>\n",
+       "      <td>10.28</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>19936 rows × 31 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "        Time        V1        V2        V3        V4        V5        V6  \\\n",
+       "0          0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388   \n",
+       "1          0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361   \n",
+       "2          1 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499   \n",
+       "3          1 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203   \n",
+       "4          2 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921   \n",
+       "...      ...       ...       ...       ...       ...       ...       ...   \n",
+       "19995  47051  1.254059 -0.786311  0.286283 -0.666334 -0.951138 -0.389992   \n",
+       "19996  47052 -1.883323  0.104475  1.931791 -3.691559 -0.196086  1.630184   \n",
+       "19997  47052  1.184662 -0.216035  0.651774 -0.168070 -0.769154 -0.379905   \n",
+       "19998  47053  0.829086 -0.420209 -0.323887  1.118331 -0.078426 -0.392259   \n",
+       "19999  47054 -0.437949  0.851474  1.291254  1.115927  0.238548  0.530677   \n",
+       "\n",
+       "             V7        V8        V9  ...       V21       V22       V23  \\\n",
+       "0      0.239599  0.098698  0.363787  ... -0.018307  0.277838 -0.110474   \n",
+       "1     -0.078803  0.085102 -0.255425  ... -0.225775 -0.638672  0.101288   \n",
+       "2      0.791461  0.247676 -1.514654  ...  0.247998  0.771679  0.909412   \n",
+       "3      0.237609  0.377436 -1.387024  ... -0.108300  0.005274 -0.190321   \n",
+       "4      0.592941 -0.270533  0.817739  ... -0.009431  0.798278 -0.137458   \n",
+       "...         ...       ...       ...  ...       ...       ...       ...   \n",
+       "19995 -0.560189 -0.024899 -0.790512  ...  0.040335 -0.060404 -0.100546   \n",
+       "19996 -0.391184  1.133396  2.757721  ... -0.134996  0.395790 -0.229124   \n",
+       "19997 -0.482859  0.188342  0.333287  ... -0.058520 -0.224482  0.157778   \n",
+       "19998  0.545886 -0.259599 -0.032113  ...  0.124450 -0.134035 -0.422629   \n",
+       "19999  0.383649  0.379522 -0.255904  ... -0.024795  0.171924 -0.179547   \n",
+       "\n",
+       "            V24       V25       V26       V27       V28  Amount  Class  \n",
+       "0      0.066928  0.128539 -0.189115  0.133558 -0.021053  149.62      0  \n",
+       "1     -0.339846  0.167170  0.125895 -0.008983  0.014724    2.69      0  \n",
+       "2     -0.689281 -0.327642 -0.139097 -0.055353 -0.059752  378.66      0  \n",
+       "3     -1.175575  0.647376 -0.221929  0.062723  0.061458  123.50      0  \n",
+       "4      0.141267 -0.206010  0.502292  0.219422  0.215153   69.99      0  \n",
+       "...         ...       ...       ...       ...       ...     ...    ...  \n",
+       "19995  0.024825  0.457905 -0.304989 -0.008119  0.012787   75.44      0  \n",
+       "19996 -1.004798  0.596717 -0.950903  0.115782 -0.134574    7.74      0  \n",
+       "19997  0.247821 -0.060009  0.908928 -0.066832 -0.005374    0.77      0  \n",
+       "19998 -0.422666  0.719097 -0.303521 -0.031901  0.055239  250.00      0  \n",
+       "19999 -0.333910 -0.137862 -0.214643  0.412898  0.187111   10.28      0  \n",
+       "\n",
+       "[19936 rows x 31 columns]"
+      ]
+     },
+     "execution_count": 64,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "non_fraud"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "id": "bb5e7f1f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "19936"
+      ]
+     },
+     "execution_count": 65,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "non_fraud=len(dataframe[dataframe.Class == 0])\n",
+    "non_fraud"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "id": "c43475c4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "64"
+      ]
+     },
+     "execution_count": 66,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fraud=len(dataframe[dataframe.Class == 1])\n",
+    "fraud"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "id": "6aa73073",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fraud_percentage = (fraud/(fraud+non_fraud))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 68,
+   "id": "49471e5f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.0032"
+      ]
+     },
+     "execution_count": 68,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fraud_percentage"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "93c5d329",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.32"
+      ]
+     },
+     "execution_count": 44,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "fraud_percentage = (fraud/(fraud+non_fraud)) *100\n",
+    "fraud_percentage"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "01f42b6b",
+   "metadata": {},
+   "source": [
+    "Using the visualization module, visualize the genuine and fraudulent\n",
+    "transactions using a bar graph."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b916ba00",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "id": "e45dca38",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "labels=['genuine','fraudulent']\n",
+    "count_class = dataframe.value_counts(dataframe['Class'], sort= True)\n",
+    "count_class.plot(kind='bar',rot=0)\n",
+    "plt.title('Visualization of labels')\n",
+    "plt.xticks(range(2),labels)\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "03b94004",
+   "metadata": {},
+   "source": [
+    "Using the Standard Scaler module, normalize the amount column and store\n",
+    "the new values in the NormalizedAmount column."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 70,
+   "id": "fd646db2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.preprocessing import StandardScaler"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 71,
+   "id": "486d2eb5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "scaler=StandardScaler()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "id": "dba1bc20",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dataframe[\"NormalizedAmount\"] = scaler.fit_transform(dataframe[\"Amount\"].values.reshape(-1, 1))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "id": "d97a424c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([149.62,   2.69, 378.66, ...,   0.77, 250.  ,  10.28])"
+      ]
+     },
+     "execution_count": 77,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe[\"Amount\"].values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 78,
+   "id": "aec3e2b5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[149.62],\n",
+       "       [  2.69],\n",
+       "       [378.66],\n",
+       "       ...,\n",
+       "       [  0.77],\n",
+       "       [250.  ],\n",
+       "       [ 10.28]])"
+      ]
+     },
+     "execution_count": 78,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe[\"Amount\"].values.reshape(-1, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 79,
+   "id": "d746df2d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[ 0.1883572 ],\n",
+       "       [-0.36872471],\n",
+       "       [ 1.0567574 ],\n",
+       "       ...,\n",
+       "       [-0.37600435],\n",
+       "       [ 0.5689458 ],\n",
+       "       [-0.33994739]])"
+      ]
+     },
+     "execution_count": 79,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scaler.fit_transform(dataframe[\"Amount\"].values.reshape(-1, 1))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "id": "284118aa",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Time</th>\n",
+       "      <th>V1</th>\n",
+       "      <th>V2</th>\n",
+       "      <th>V3</th>\n",
+       "      <th>V4</th>\n",
+       "      <th>V5</th>\n",
+       "      <th>V6</th>\n",
+       "      <th>V7</th>\n",
+       "      <th>V8</th>\n",
+       "      <th>V9</th>\n",
+       "      <th>...</th>\n",
+       "      <th>V22</th>\n",
+       "      <th>V23</th>\n",
+       "      <th>V24</th>\n",
+       "      <th>V25</th>\n",
+       "      <th>V26</th>\n",
+       "      <th>V27</th>\n",
+       "      <th>V28</th>\n",
+       "      <th>Amount</th>\n",
+       "      <th>Class</th>\n",
+       "      <th>NormalizedAmount</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>-1.359807</td>\n",
+       "      <td>-0.072781</td>\n",
+       "      <td>2.536347</td>\n",
+       "      <td>1.378155</td>\n",
+       "      <td>-0.338321</td>\n",
+       "      <td>0.462388</td>\n",
+       "      <td>0.239599</td>\n",
+       "      <td>0.098698</td>\n",
+       "      <td>0.363787</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.277838</td>\n",
+       "      <td>-0.110474</td>\n",
+       "      <td>0.066928</td>\n",
+       "      <td>0.128539</td>\n",
+       "      <td>-0.189115</td>\n",
+       "      <td>0.133558</td>\n",
+       "      <td>-0.021053</td>\n",
+       "      <td>149.62</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.188357</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>1.191857</td>\n",
+       "      <td>0.266151</td>\n",
+       "      <td>0.166480</td>\n",
+       "      <td>0.448154</td>\n",
+       "      <td>0.060018</td>\n",
+       "      <td>-0.082361</td>\n",
+       "      <td>-0.078803</td>\n",
+       "      <td>0.085102</td>\n",
+       "      <td>-0.255425</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.638672</td>\n",
+       "      <td>0.101288</td>\n",
+       "      <td>-0.339846</td>\n",
+       "      <td>0.167170</td>\n",
+       "      <td>0.125895</td>\n",
+       "      <td>-0.008983</td>\n",
+       "      <td>0.014724</td>\n",
+       "      <td>2.69</td>\n",
+       "      <td>0</td>\n",
+       "      <td>-0.368725</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-1.358354</td>\n",
+       "      <td>-1.340163</td>\n",
+       "      <td>1.773209</td>\n",
+       "      <td>0.379780</td>\n",
+       "      <td>-0.503198</td>\n",
+       "      <td>1.800499</td>\n",
+       "      <td>0.791461</td>\n",
+       "      <td>0.247676</td>\n",
+       "      <td>-1.514654</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.771679</td>\n",
+       "      <td>0.909412</td>\n",
+       "      <td>-0.689281</td>\n",
+       "      <td>-0.327642</td>\n",
+       "      <td>-0.139097</td>\n",
+       "      <td>-0.055353</td>\n",
+       "      <td>-0.059752</td>\n",
+       "      <td>378.66</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.056757</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>-0.966272</td>\n",
+       "      <td>-0.185226</td>\n",
+       "      <td>1.792993</td>\n",
+       "      <td>-0.863291</td>\n",
+       "      <td>-0.010309</td>\n",
+       "      <td>1.247203</td>\n",
+       "      <td>0.237609</td>\n",
+       "      <td>0.377436</td>\n",
+       "      <td>-1.387024</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.005274</td>\n",
+       "      <td>-0.190321</td>\n",
+       "      <td>-1.175575</td>\n",
+       "      <td>0.647376</td>\n",
+       "      <td>-0.221929</td>\n",
+       "      <td>0.062723</td>\n",
+       "      <td>0.061458</td>\n",
+       "      <td>123.50</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.089324</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>2</td>\n",
+       "      <td>-1.158233</td>\n",
+       "      <td>0.877737</td>\n",
+       "      <td>1.548718</td>\n",
+       "      <td>0.403034</td>\n",
+       "      <td>-0.407193</td>\n",
+       "      <td>0.095921</td>\n",
+       "      <td>0.592941</td>\n",
+       "      <td>-0.270533</td>\n",
+       "      <td>0.817739</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.798278</td>\n",
+       "      <td>-0.137458</td>\n",
+       "      <td>0.141267</td>\n",
+       "      <td>-0.206010</td>\n",
+       "      <td>0.502292</td>\n",
+       "      <td>0.219422</td>\n",
+       "      <td>0.215153</td>\n",
+       "      <td>69.99</td>\n",
+       "      <td>0</td>\n",
+       "      <td>-0.113558</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 32 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Time        V1        V2        V3        V4        V5        V6        V7  \\\n",
+       "0     0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599   \n",
+       "1     0  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803   \n",
+       "2     1 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461   \n",
+       "3     1 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609   \n",
+       "4     2 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941   \n",
+       "\n",
+       "         V8        V9  ...       V22       V23       V24       V25       V26  \\\n",
+       "0  0.098698  0.363787  ...  0.277838 -0.110474  0.066928  0.128539 -0.189115   \n",
+       "1  0.085102 -0.255425  ... -0.638672  0.101288 -0.339846  0.167170  0.125895   \n",
+       "2  0.247676 -1.514654  ...  0.771679  0.909412 -0.689281 -0.327642 -0.139097   \n",
+       "3  0.377436 -1.387024  ...  0.005274 -0.190321 -1.175575  0.647376 -0.221929   \n",
+       "4 -0.270533  0.817739  ...  0.798278 -0.137458  0.141267 -0.206010  0.502292   \n",
+       "\n",
+       "        V27       V28  Amount  Class  NormalizedAmount  \n",
+       "0  0.133558 -0.021053  149.62      0          0.188357  \n",
+       "1 -0.008983  0.014724    2.69      0         -0.368725  \n",
+       "2 -0.055353 -0.059752  378.66      0          1.056757  \n",
+       "3  0.062723  0.061458  123.50      0          0.089324  \n",
+       "4  0.219422  0.215153   69.99      0         -0.113558  \n",
+       "\n",
+       "[5 rows x 32 columns]"
+      ]
+     },
+     "execution_count": 80,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "id": "d4c6c7fb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dataframe.drop(['Amount','Time'],inplace=True,axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "id": "453f5a91",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>V1</th>\n",
+       "      <th>V2</th>\n",
+       "      <th>V3</th>\n",
+       "      <th>V4</th>\n",
+       "      <th>V5</th>\n",
+       "      <th>V6</th>\n",
+       "      <th>V7</th>\n",
+       "      <th>V8</th>\n",
+       "      <th>V9</th>\n",
+       "      <th>V10</th>\n",
+       "      <th>...</th>\n",
+       "      <th>V21</th>\n",
+       "      <th>V22</th>\n",
+       "      <th>V23</th>\n",
+       "      <th>V24</th>\n",
+       "      <th>V25</th>\n",
+       "      <th>V26</th>\n",
+       "      <th>V27</th>\n",
+       "      <th>V28</th>\n",
+       "      <th>Class</th>\n",
+       "      <th>NormalizedAmount</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>-1.359807</td>\n",
+       "      <td>-0.072781</td>\n",
+       "      <td>2.536347</td>\n",
+       "      <td>1.378155</td>\n",
+       "      <td>-0.338321</td>\n",
+       "      <td>0.462388</td>\n",
+       "      <td>0.239599</td>\n",
+       "      <td>0.098698</td>\n",
+       "      <td>0.363787</td>\n",
+       "      <td>0.090794</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.018307</td>\n",
+       "      <td>0.277838</td>\n",
+       "      <td>-0.110474</td>\n",
+       "      <td>0.066928</td>\n",
+       "      <td>0.128539</td>\n",
+       "      <td>-0.189115</td>\n",
+       "      <td>0.133558</td>\n",
+       "      <td>-0.021053</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.188357</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1.191857</td>\n",
+       "      <td>0.266151</td>\n",
+       "      <td>0.166480</td>\n",
+       "      <td>0.448154</td>\n",
+       "      <td>0.060018</td>\n",
+       "      <td>-0.082361</td>\n",
+       "      <td>-0.078803</td>\n",
+       "      <td>0.085102</td>\n",
+       "      <td>-0.255425</td>\n",
+       "      <td>-0.166974</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.225775</td>\n",
+       "      <td>-0.638672</td>\n",
+       "      <td>0.101288</td>\n",
+       "      <td>-0.339846</td>\n",
+       "      <td>0.167170</td>\n",
+       "      <td>0.125895</td>\n",
+       "      <td>-0.008983</td>\n",
+       "      <td>0.014724</td>\n",
+       "      <td>0</td>\n",
+       "      <td>-0.368725</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>-1.358354</td>\n",
+       "      <td>-1.340163</td>\n",
+       "      <td>1.773209</td>\n",
+       "      <td>0.379780</td>\n",
+       "      <td>-0.503198</td>\n",
+       "      <td>1.800499</td>\n",
+       "      <td>0.791461</td>\n",
+       "      <td>0.247676</td>\n",
+       "      <td>-1.514654</td>\n",
+       "      <td>0.207643</td>\n",
+       "      <td>...</td>\n",
+       "      <td>0.247998</td>\n",
+       "      <td>0.771679</td>\n",
+       "      <td>0.909412</td>\n",
+       "      <td>-0.689281</td>\n",
+       "      <td>-0.327642</td>\n",
+       "      <td>-0.139097</td>\n",
+       "      <td>-0.055353</td>\n",
+       "      <td>-0.059752</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.056757</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>-0.966272</td>\n",
+       "      <td>-0.185226</td>\n",
+       "      <td>1.792993</td>\n",
+       "      <td>-0.863291</td>\n",
+       "      <td>-0.010309</td>\n",
+       "      <td>1.247203</td>\n",
+       "      <td>0.237609</td>\n",
+       "      <td>0.377436</td>\n",
+       "      <td>-1.387024</td>\n",
+       "      <td>-0.054952</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.108300</td>\n",
+       "      <td>0.005274</td>\n",
+       "      <td>-0.190321</td>\n",
+       "      <td>-1.175575</td>\n",
+       "      <td>0.647376</td>\n",
+       "      <td>-0.221929</td>\n",
+       "      <td>0.062723</td>\n",
+       "      <td>0.061458</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.089324</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>-1.158233</td>\n",
+       "      <td>0.877737</td>\n",
+       "      <td>1.548718</td>\n",
+       "      <td>0.403034</td>\n",
+       "      <td>-0.407193</td>\n",
+       "      <td>0.095921</td>\n",
+       "      <td>0.592941</td>\n",
+       "      <td>-0.270533</td>\n",
+       "      <td>0.817739</td>\n",
+       "      <td>0.753074</td>\n",
+       "      <td>...</td>\n",
+       "      <td>-0.009431</td>\n",
+       "      <td>0.798278</td>\n",
+       "      <td>-0.137458</td>\n",
+       "      <td>0.141267</td>\n",
+       "      <td>-0.206010</td>\n",
+       "      <td>0.502292</td>\n",
+       "      <td>0.219422</td>\n",
+       "      <td>0.215153</td>\n",
+       "      <td>0</td>\n",
+       "      <td>-0.113558</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5 rows × 30 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "         V1        V2        V3        V4        V5        V6        V7  \\\n",
+       "0 -1.359807 -0.072781  2.536347  1.378155 -0.338321  0.462388  0.239599   \n",
+       "1  1.191857  0.266151  0.166480  0.448154  0.060018 -0.082361 -0.078803   \n",
+       "2 -1.358354 -1.340163  1.773209  0.379780 -0.503198  1.800499  0.791461   \n",
+       "3 -0.966272 -0.185226  1.792993 -0.863291 -0.010309  1.247203  0.237609   \n",
+       "4 -1.158233  0.877737  1.548718  0.403034 -0.407193  0.095921  0.592941   \n",
+       "\n",
+       "         V8        V9       V10  ...       V21       V22       V23       V24  \\\n",
+       "0  0.098698  0.363787  0.090794  ... -0.018307  0.277838 -0.110474  0.066928   \n",
+       "1  0.085102 -0.255425 -0.166974  ... -0.225775 -0.638672  0.101288 -0.339846   \n",
+       "2  0.247676 -1.514654  0.207643  ...  0.247998  0.771679  0.909412 -0.689281   \n",
+       "3  0.377436 -1.387024 -0.054952  ... -0.108300  0.005274 -0.190321 -1.175575   \n",
+       "4 -0.270533  0.817739  0.753074  ... -0.009431  0.798278 -0.137458  0.141267   \n",
+       "\n",
+       "        V25       V26       V27       V28  Class  NormalizedAmount  \n",
+       "0  0.128539 -0.189115  0.133558 -0.021053      0          0.188357  \n",
+       "1  0.167170  0.125895 -0.008983  0.014724      0         -0.368725  \n",
+       "2 -0.327642 -0.139097 -0.055353 -0.059752      0          1.056757  \n",
+       "3  0.647376 -0.221929  0.062723  0.061458      0          0.089324  \n",
+       "4 -0.206010  0.502292  0.219422  0.215153      0         -0.113558  \n",
+       "\n",
+       "[5 rows x 30 columns]"
+      ]
+     },
+     "execution_count": 82,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dataframe.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "id": "3b083f5a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x=dataframe.drop(['Class'],axis=1)\n",
+    "y=dataframe['Class']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d3871a2e",
+   "metadata": {},
+   "source": [
+    "6. Split the dataset in train and test set and have a 70:30 split ratio for the model."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "45044d8a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import train_test_split\n",
+    "x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "id": "bbf3dbfb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(14000, 29)"
+      ]
+     },
+     "execution_count": 87,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x_train.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "id": "2c8d13fa",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(6000, 29)"
+      ]
+     },
+     "execution_count": 88,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "x_test.shape"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4a80099f",
+   "metadata": {},
+   "source": [
+    "Now use a decision tree and random forest model for training on top of the\n",
+    "train set."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 89,
+   "id": "b5754691",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.tree import DecisionTreeClassifier\n",
+    "from sklearn.ensemble import RandomForestClassifier"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 90,
+   "id": "47111c15",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "d_t=DecisionTreeClassifier()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 92,
+   "id": "c6292323",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "r_f=RandomForestClassifier(n_estimators=100)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 94,
+   "id": "e7214ddb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "RandomForestClassifier()"
+      ]
+     },
+     "execution_count": 94,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "r_f.fit(x_train,y_train)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 95,
+   "id": "23b338d0",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "DecisionTreeClassifier()"
+      ]
+     },
+     "execution_count": 95,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "d_t.fit(x_train,y_train)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 100,
+   "id": "899a98de",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "yd_pred=d_t.predict(x_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 101,
+   "id": "2e754f3c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "yr_pred=r_f.predict(x_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 93,
+   "id": "f3fc5444",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.metrics import accuracy_score"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 98,
+   "id": "77c83758",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "99.6"
+      ]
+     },
+     "execution_count": 98,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "d_t.score(x_test,y_test)*100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 105,
+   "id": "7f64edf3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "99.6"
+      ]
+     },
+     "execution_count": 105,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "accuracy_score(y_test,yd_pred)*100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 99,
+   "id": "7e9d34e0",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "99.76666666666667"
+      ]
+     },
+     "execution_count": 99,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "r_f.score(x_test,y_test)*100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 104,
+   "id": "7aa759c5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "99.76666666666667"
+      ]
+     },
+     "execution_count": 104,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "accuracy_score(y_test,yr_pred) *100"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "185361f3",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
